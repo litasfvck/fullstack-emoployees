@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>Сотрудники</h2>
+
+  <button class="refresh-btn" (click)="loadEmployees()">Обновить</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ФИО</th>
+        <th>Должность</th>
+        <th>Отдел</th>
+        <th>Зарплата</th>
+        <th>Дата найма</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngIf="loading()">
+        <td colspan="5" class="empty">Загрузка...</td>
+      </tr>
+
+      <tr *ngIf="!loading() && employees().length === 0">
+        <td colspan="5" class="empty">Пока нет данных</td>
+      </tr>
+
+      <tr *ngFor="let e of employees()">
+        <td>{{ e.fullName }}</td>
+        <td>{{ e.position }}</td>
+        <td>{{ e.department }}</td>
+        <td>{{ e.salary }} ₽</td>
+        <td>{{ e.hiredAt | date:'dd.MM.yyyy' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
