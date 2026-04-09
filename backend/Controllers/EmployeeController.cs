@@ -8,7 +8,6 @@ namespace backend.Controllers
     [Route("api/employees")]
     public class EmployeeController(IEmployeeService employeeService) : ControllerBase
     {
-        // GET: api/employees
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetAll(CancellationToken ct)
         {

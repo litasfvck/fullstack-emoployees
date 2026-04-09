@@ -123,3 +123,4 @@ D:\fullstack-employees\backend\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.Works
 D:\fullstack-employees\backend\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 D:\fullstack-employees\backend\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 D:\fullstack-employees\backend\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\fullstack-employees\backend\obj\Debug\net10.0\backend.sourcelink.json

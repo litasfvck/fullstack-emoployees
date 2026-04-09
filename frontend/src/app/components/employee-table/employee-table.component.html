@@ -1,35 +1,118 @@
-<div class="container">
-  <h2>Сотрудники</h2>
+<section class="employees" aria-label="Список сотрудников">
+  <div class="employees__wrapper">
+    <header class="employees__toolbar">
+      <div class="employees__titles">
+        <h1 class="employees__title">Сотрудники</h1>
+        <p class="employees__subtitle">
+          {{ employees().length }} записей
+        </p>
+      </div>
 
-  <button class="refresh-btn" (click)="loadEmployees()">Обновить</button>
+      <button
+        type="button"
+        class="employees__refresh-btn"
+        [class.employees__refresh-btn--spinning]="loading()"
+        [disabled]="loading()"
+        (click)="loadEmployees()"
+        [attr.aria-busy]="loading()"
+        aria-label="Обновить список сотрудников"
+      >
+        <svg
+          class="employees__refresh-icon"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M13.5 8A5.5 5.5 0 1 1 10 3.07" />
+          <path d="M13.5 2.5v3h-3" />
+        </svg>
+        <span>Обновить</span>
+      </button>
+    </header>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ФИО</th>
-        <th>Должность</th>
-        <th>Отдел</th>
-        <th>Зарплата</th>
-        <th>Дата найма</th>
-      </tr>
-    </thead>
+    <div class="employees__table-wrap" role="region" aria-label="Таблица сотрудников">
+      <table class="employees__table">
+        <caption class="employees__caption">
+          Таблица сотрудников с указанием должности, отдела, зарплаты и даты найма
+        </caption>
 
-    <tbody>
-      <tr *ngIf="loading()">
-        <td colspan="5" class="empty">Загрузка...</td>
-      </tr>
+        <colgroup>
+          <col style="width: 22%" />
+          <col style="width: 20%" />
+          <col style="width: 16%" />
+          <col style="width: 14%" />
+          <col style="width: 14%" />
+        </colgroup>
 
-      <tr *ngIf="!loading() && employees().length === 0">
-        <td colspan="5" class="empty">Пока нет данных</td>
-      </tr>
+        <thead class="employees__head">
+          <tr>
+            <th scope="col">
+              ФИО
+              <span class="employees__resizer" aria-hidden="true"></span>
+            </th>
+            <th scope="col">
+              Должность
+              <span class="employees__resizer" aria-hidden="true"></span>
+            </th>
+            <th scope="col">
+              Отдел
+              <span class="employees__resizer" aria-hidden="true"></span>
+            </th>
+            <th scope="col">
+              Зарплата
+              <span class="employees__resizer" aria-hidden="true"></span>
+            </th>
+            <th scope="col">
+              Дата найма
+            </th>
+          </tr>
+        </thead>
 
-      <tr *ngFor="let e of employees()">
-        <td>{{ e.fullName }}</td>
-        <td>{{ e.position }}</td>
-        <td>{{ e.department }}</td>
-        <td>{{ e.salary }} ₽</td>
-        <td>{{ e.hiredAt | date:'dd.MM.yyyy' }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+        <tbody class="employees__body">
+          @if (loading()) {
+            <tr class="employees__state-row" role="status" aria-live="polite">
+              <td colspan="5">Загрузка...</td>
+            </tr>
+          } @else if (error()) {
+            <tr class="employees__state-row" role="status" aria-live="polite">
+              <td colspan="5">{{ error() }}</td>
+            </tr>
+          } @else if (employees().length === 0) {
+            <tr class="employees__state-row" role="status" aria-live="polite">
+              <td colspan="5">Нет данных</td>
+            </tr>
+          } @else {
+            @for (emp of employees(); track emp.id) {
+              <tr class="employees__row">
+                <td class="employees__cell employees__cell--name">
+                  {{ emp.fullName }}
+                </td>
+                <td class="employees__cell employees__cell--position">
+                  {{ emp.position }}
+                </td>
+                <td class="employees__cell employees__cell--department">
+                  <span
+                    class="employees__dept-badge employees__dept-badge--{{ deptClass(emp.department) }}"
+                  >
+                    {{ emp.department }}
+                  </span>
+                </td>
+                <td class="employees__cell employees__cell--salary">
+                  {{ emp.salary | currency : 'RUB' : 'symbol-narrow' : '1.0-0' }}
+                </td>
+                <td class="employees__cell employees__cell--date">
+                  {{ emp.hiredAt | date : 'dd.MM.yyyy' }}
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
