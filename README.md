@@ -11,7 +11,7 @@
 ## Запуск
 
 ```bash
-git clone https://github.com/litasfvck/fullstack-emoployees.git
+git clone https://github.com/litasfvck/fullstack-employees.git
 cd <repo>
 docker-compose up --build
 ```
